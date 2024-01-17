@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.printf;
+
 @RequestMapping("/members")
 @Controller
 @RequiredArgsConstructor
@@ -54,6 +56,7 @@ public class MemberController {
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
+        System.out.println("로그인에 실패했습니다. ");
         return "/member/memberLoginForm";
     }
 
