@@ -37,7 +37,7 @@ public class ItemService {
                 itemImg.setRepimgYn("Y");
             else
                 itemImg.setRepimgYn("N");
-            itemImgService.
+            itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
         }
 
         return item.getId();
