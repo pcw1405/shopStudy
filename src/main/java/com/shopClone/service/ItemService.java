@@ -1,15 +1,18 @@
 package com.shopClone.service;
 
 import com.shopClone.dto.ItemFormDto;
+import com.shopClone.dto.ItemSearchDto;
 import com.shopClone.entity.Item;
 import com.shopClone.entity.ItemImg;
 import com.shopClone.repository.ItemImgRepository;
 import com.shopClone.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -42,5 +45,11 @@ public class ItemService {
 
         return item.getId();
     }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+        return itemRepository.
+    }
+
 
 }
