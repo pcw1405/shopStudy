@@ -24,7 +24,7 @@ public class ItemController {
     @GetMapping(value = "/admin/item/new")
     public String ItemForm(Model model){
         model.addAttribute("itemFormDto",new ItemFormDto());
-        return "item/itemForm";
+        return "/item/itemForm";
     }
 
     @PostMapping(value = "/admin/item/new")
@@ -39,13 +39,13 @@ public class ItemController {
 
         if(itemImgFileList.get(0).isEmpty()&& itemFormDto.getId() ==null){
             model.addAttribute("errorMessage","첫번째 상품 이미지는 필수 입력 값 입니다. ");
-            return "item/itemFrom";
+            return "item/itemForm";
         }
         try{
             itemService.saveItem(itemFormDto,itemImgFileList);
         }catch (Exception e){
             model.addAttribute("errorMessage","상품 등록 중 에러가 발생하였습니다");
-            return "item/itemFrom";
+            return "item/itemForm";
         }
 
         return "redirect:/";
