@@ -2,6 +2,7 @@ package com.shopClone.service;
 
 import com.shopClone.dto.ItemFormDto;
 import com.shopClone.dto.ItemSearchDto;
+import com.shopClone.dto.MainItemDto;
 import com.shopClone.entity.Item;
 import com.shopClone.entity.ItemImg;
 import com.shopClone.repository.ItemImgRepository;
@@ -48,8 +49,12 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
-        return itemRepository.
+        return itemRepository.getAdminItemPage(itemSearchDto,pageable);
     }
-
+    // itemSearchDto와 pageabel를 매개변수로 받아서 itemRepository에서 Item 데이터를 조회하는 작업이다.
+//    @Transactional(readOnly = true)
+//    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+//        return itemRepository.getMainItemPage(itemSearchDto,pageable);
+//    }
 
 }

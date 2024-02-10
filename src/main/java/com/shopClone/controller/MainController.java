@@ -24,8 +24,11 @@ public class MainController {
         //System.out.println("로그인에 성공했습니다");
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get():0,6);
-        Page<MainItemDto> items=itemService.getMainItemPage(itemSearchDto,pageable);
+//        Page<MainItemDto> items=itemService.getMainItemPage(itemSearchDto,pageable);
 
+//        model.addAttribute("items",items);
+        model.addAttribute("itemSearchDto",itemSearchDto);
+        model.addAttribute("maxPage",5);
 
         return "main";
     }
