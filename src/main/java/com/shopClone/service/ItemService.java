@@ -52,9 +52,9 @@ public class ItemService {
         return itemRepository.getAdminItemPage(itemSearchDto,pageable);
     }
     // itemSearchDto와 pageabel를 매개변수로 받아서 itemRepository에서 Item 데이터를 조회하는 작업이다.
-//    @Transactional(readOnly = true)
-//    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
-//        return itemRepository.getMainItemPage(itemSearchDto,pageable);
-//    }
+    @Transactional(readOnly = true)
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+        return itemRepository.getMainItemPage(itemSearchDto,pageable);
+    }
 
 }
