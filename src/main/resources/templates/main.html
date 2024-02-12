@@ -54,7 +54,7 @@
         <th:block th:each="item, status: ${items.getContent()}">
             <div class="col-md-4 margin">
                 <div class="card">
-                    <a th:href="'/item/'+${item.id}" class="test-dark">
+                    <a th:href="'/item/'+${item.id}" class="text-dark">
                         <img src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}" height="400">
                         <div class="card-body">
                             <h4 class="card-title">[[${item.itemNm}]]</h4>
@@ -72,7 +72,7 @@
     <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start+(maxPage -1 ) < items.totalPages ? start +(maxPage -1 ): items.totalPages)})">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${items.number eq 0}?'disabled':''">
-                <a href="@{'/'+'?searchQuery='+ ${itemSearchDto.searchQuery}+ '&page' + ${items.number-1} " aria-lable="Previous" class="page-link">
+                <a href="@{'/'+'?searchQuery='+ ${itemSearchDto.searchQuery}+ '&page' + ${items.number-1} " aria-label="Previous" class="page-link">
                     <span aria-hidden="true">Previous</span>
                 </a>
             </li>
