@@ -1,5 +1,6 @@
 package com.shopClone.controller;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.shopClone.dto.MemberFormDto;
 import com.shopClone.entity.Member;
 import com.shopClone.service.MemberService;
@@ -22,7 +23,7 @@ import static org.codehaus.groovy.runtime.DefaultGroovyMethods.printf;
 public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
-
+    @JsonBackReference
     @GetMapping(value = "/new")
     public String memberForm(Model model){
 

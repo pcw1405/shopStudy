@@ -2,11 +2,14 @@ package com.shopClone.service;
 
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
 @Service
+@Transactional
 @Log
 public class FileService {
 
@@ -23,5 +26,15 @@ public class FileService {
         return savedFileName;
         // fileData 바이트 배열로 기록
 
+    }
+
+    public void deleteFile(String filePath) throws Exception{
+        File deleteFile = new File(filePath);
+        if(deleteFile.exists()){
+            deleteFile.delete();
+            log.info("파일을 삭제하였습니다.");
+        }else{
+            log.info("파일이 존재하지 않습니다.");
+        }
     }
 }
