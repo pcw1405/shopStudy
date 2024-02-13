@@ -5,7 +5,7 @@
 <div th:fragment="header">
   <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
     <div class="container-fluid">
-      <a class="naver-brand" href="#">Shop</a>
+      <a class="navbar-brand" href="#">Shop</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,16 +19,16 @@
             <a class="nav-link" href="/admin/items">상품 관리</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/admin/cart">장바구니</a>
+            <a class="nav-link" href="/cart">장바구니</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/admin/cart">구매이력</a>
+            <a class="nav-link" href="/orders">구매이력</a>
           </li>
           <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/admin/login">로그인</a>
+            <a class="nav-link" href="/members/login">로그인</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/admin/logout">로그아웃</a>
+            <a class="nav-link" href="/members/logout">로그아웃</a>
           </li>
         </ul>
         <form class="d-flex" role="search" th:action="@{/}" method="get">

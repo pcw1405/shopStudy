@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter @Setter
 public class ItemSearchDto {
 
-    private String searchDataType; // 조회시간
+    private String searchDateType; // 조회시간
 
     private ItemSellStatus searchSellStatus;
     //판매상태

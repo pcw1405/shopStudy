@@ -1,5 +1,6 @@
 package com.shopClone.controller;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.shopClone.dto.ItemFormDto;
 import com.shopClone.service.ItemService;
 import groovy.util.logging.Slf4j;
@@ -52,7 +53,7 @@ public class ItemController {
 
         return "redirect:/";
     }
-
+    @JsonBackReference
     @GetMapping(value = "/admin/item/{itemId}") // 수정목록 조회
     public String itemDtl(@PathVariable("itemId") Long itemId,Model model){
 

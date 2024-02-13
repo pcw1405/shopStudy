@@ -11,11 +11,11 @@ public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String ussrId= "";
+        String userId= "";
         if(authentication !=null){
-            ussrId=authentication.getName();
+            userId=authentication.getName();
         }
-        return Optional.of(ussrId);
+        return Optional.of(userId);
     }
 
 }
