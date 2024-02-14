@@ -34,20 +34,20 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus){
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
     }
-    private BooleanExpression regDtsAfter(String searchDataType){
-        LocalDateTime dataTime = LocalDateTime.now();
-        if(StringUtils.equals("all",searchDataType) || searchDataType ==null){
+    private BooleanExpression regDtsAfter(String searchDateType){
+        LocalDateTime dateTime = LocalDateTime.now();
+        if(StringUtils.equals("all",searchDateType) || searchDateType ==null){
             return null;
-        }else if(StringUtils.equals("1d",searchDataType)){
-            dataTime=dataTime.minusDays(1);
-        }else if(StringUtils.equals("1w",searchDataType)){
-            dataTime=dataTime.minusWeeks(1);
-        }else if(StringUtils.equals("1m",searchDataType)){
-            dataTime=dataTime.minusMonths(1);
-        }else if(StringUtils.equals("6m",searchDataType)){
-            dataTime=dataTime.minusMonths(6);
+        }else if(StringUtils.equals("1d",searchDateType)){
+            dateTime=dateTime.minusDays(1);
+        }else if(StringUtils.equals("1w",searchDateType)){
+            dateTime=dateTime.minusWeeks(1);
+        }else if(StringUtils.equals("1m",searchDateType)){
+            dateTime=dateTime.minusMonths(1);
+        }else if(StringUtils.equals("6m",searchDateType)){
+            dateTime=dateTime.minusMonths(6);
         }
-        return QItem.item.regTime.after(dataTime);
+        return QItem.item.regTime.after(dateTime);
     }
 
     private BooleanExpression searchByLike(String searchBy,String searchQuery){
@@ -63,7 +63,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     @Override
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
         List<Item> content =queryFactory
-                .select(QItem.item)
+                .selectFrom(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         searchByLike(itemSearchDto.getSearchBy(),

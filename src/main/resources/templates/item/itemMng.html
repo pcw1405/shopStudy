@@ -59,7 +59,7 @@
             </td>
             <td th:text="${item.itemSellStatus == T(com.shopClone.constant.ItemSellStatus).SELL}"></td>
 <!-- 판매 여부를 나타내는 판매중일 때와 아닐 때를 구분한다 -->
-            <td th:text="${item.createdBy}"></td>
+            <td th:text="${item.createBy}"></td>
             <td th:text="${item.regTime}"></td>
           </tr>
 
@@ -72,7 +72,10 @@
           <ul class="pagination justify-content-center">
 
             <li class="page-item" th:classappend="${items.first}?'disabled'">
-              <a th:onclick="'javascript:page(' +${page-1} + ')'" th:inline="text" class="page-link" >[[${page}]]  </a>
+              <a th:onclick="'javascript:page(' +${items.number} - 1')'" aria-label="Previous" class="page-link" >
+                <span aria-hidden='true'>Previous</span>
+              </a>
+
             </li>
 
             <li class="page-item" th:classappend="${items.last}?'disabled'">
@@ -99,7 +102,7 @@
       </select>
       <select th:field="*{searchBy}" class="form-control" style="width:auto;">
         <option value="itemNm">상품명</option>
-        <option value="createdBy">등록자</option>
+        <option value="createBy">등록자</option>
       </select>
       <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
       <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
