@@ -41,4 +41,4 @@
 
 # 사용기술 
 
-HTML, CSS, JavaScript, jQuery, Bootstrap, Spring, Java, MySQL
+HTML, CSS, JavaScript , Bootstrap, Spring Boot, Java, MySQL
