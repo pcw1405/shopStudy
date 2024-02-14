@@ -2,9 +2,14 @@ package com.shopClone.controller;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.shopClone.dto.ItemFormDto;
+import com.shopClone.dto.ItemSearchDto;
+import com.shopClone.entity.Item;
 import com.shopClone.service.ItemService;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -90,5 +96,19 @@ public class ItemController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping(value ={"/admin/items","/admin/items/{page}"})
+    public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page")Optional<Integer> page,Model model){
+        //검색 조건을 담고 있는 Dto = itemSearchDto
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,3);
+
+        Page<Item> items=itemService.getAdminItemPage(itemSearchDto,pageable);
+
+        model.addAttribute("items",items);
+        model.addAttribute("itemSearchDto",itemSearchDto);
+        model.addAttribute("maxPage",5);
+
+        return "item/itemMng";
     }
 }
