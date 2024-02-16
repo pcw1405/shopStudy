@@ -13,6 +13,18 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-//    List<Order> findOrders(@Param("email") String email, Pageable pageable);
+    @Query("select o from Order o " +
+            "where o.member.email = :email "+
+            "order by o.orderDate desc"
+    )
+    List<Order> findOrders(@Param("email") String email, Pageable pageable);
+    // 현재 로그인한 사용자의 주문 데이터를 페이지 조건에 맞춰서 조회한다
+    // 'email' 파라미터를 사용하여 현재 로그인한 사용자의 이메일과 일치하는 주문데이터를 조회
+
+    @Query("select count(o) from Order o " +
+        "where o.member email =:email"
+    )
+    Long countOrder(@Param("email") String email);
+    //현재 로그인한 회원의 주문 개수가 몇 개인지를 조회한다
 
 }

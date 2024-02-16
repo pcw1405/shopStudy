@@ -1,15 +1,17 @@
 package com.shopClone.service;
 
 import com.shopClone.dto.OrderDto;
-import com.shopClone.entity.Item;
-import com.shopClone.entity.Member;
-import com.shopClone.entity.Order;
-import com.shopClone.entity.OrderItem;
+import com.shopClone.dto.OrderHistDto;
+import com.shopClone.dto.OrderItemDto;
+import com.shopClone.entity.*;
 import com.shopClone.repository.ItemImgRepository;
 import com.shopClone.repository.ItemRepository;
 import com.shopClone.repository.MemberRepository;
 import com.shopClone.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,4 +44,27 @@ public class OrderService {
         return order.getId();
     }
 
+    @Transactional(readOnly = true)
+    public Page<OrderHistDto> getOrderList(String email, Pageable pageable){
+        List<Order> orders =orderRepository.findOrders(email,pageable);
+
+        Long totalCount=orderRepository.countOrder(email);
+        //유저의 주문 총 개수
+        List<OrderHistDto> orderHistDtos =new ArrayList<>();
+        for (Order order :orders){
+            //주문 리스트를 순회 구매 이력 페이지에 전달 DTO를 생성
+            OrderHistDto orderHistDto =new OrderHistDto(order);
+            List<OrderItem> orderItems =order.getOrderItems();
+
+            for (OrderItem orderItem : orderItems){
+                ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn
+                        (orderItem.getItem().getId(), "Y"); //주문한 상품의 대표이미지를 조회
+                OrderItemDto orderItemDto =
+                        new OrderItemDto(orderItem,itemImg.getImgUrl());
+            }
+            orderHistDtos.add(orderHistDto);
+        }
+        return new PageImpl<OrderHistDto>(orderHistDtos,pageable,totalCount);
+
+    }
 }
