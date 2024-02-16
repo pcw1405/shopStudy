@@ -97,7 +97,7 @@ public class ItemController {
 
         return "redirect:/";
     }
-
+    @JsonBackReference
     @GetMapping(value ={"/admin/items","/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page")Optional<Integer> page,Model model){
         //검색 조건을 담고 있는 Dto = itemSearchDto
