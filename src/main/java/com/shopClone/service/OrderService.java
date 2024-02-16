@@ -61,6 +61,7 @@ public class OrderService {
                         (orderItem.getItem().getId(), "Y"); //주문한 상품의 대표이미지를 조회
                 OrderItemDto orderItemDto =
                         new OrderItemDto(orderItem,itemImg.getImgUrl());
+                orderHistDto.addOrderItemDto(orderItemDto);
             }
             orderHistDtos.add(orderHistDto);
         }

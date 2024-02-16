@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +23,10 @@ public class OrderHistDto {
     private String orderDate; // 주문날짜
     private OrderStatus orderStatus; // 주문상태
 
-//    private List<OrderItemDto> orderItemDtoList =new ArrayList<>();
+   private List<OrderItemDto> orderItemDtoList =new ArrayList<>();
 
+   public void addOrderItemDto(OrderItemDto orderItemDto){
+       orderItemDtoList.add(orderItemDto);
+       // 객체를 주문 상품 리스트에 추가
+   }
 }

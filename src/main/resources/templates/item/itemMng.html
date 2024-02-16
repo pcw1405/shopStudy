@@ -78,6 +78,10 @@
 
         </li>
 
+        <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}" th:classappend="${items.number eq page-1}?'active':''">
+          <a th:onclick="'javascript:page(' +${items.number} - 1')'"  th:inline="text" class="page-link">[[${page}]]</a>
+        </li>
+
         <li class="page-item" th:classappend="${items.last}?'disabled'">
           <a th:onclick="'javascript:page(' +${items.number +1 } + ')'" aria-label='Next' class="page-link" >
             <span aria-hidden='true'>Next</span>
