@@ -58,9 +58,9 @@ public class OrderController {
     public String orderHist(@PathVariable("page")Optional<Integer> page, Principal principal, Model model){
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,4);
 
-        Page<OrderHistDto> orderHistDtoPage=orderService.getOrderList(principal.getName(),pageable);
+        Page<OrderHistDto> orderHistDtoList=orderService.getOrderList(principal.getName(),pageable);
 
-        model.addAttribute("orders",orderHistDtoPage);
+        model.addAttribute("orders",orderHistDtoList);
         model.addAttribute("page",pageable.getPageNumber());
         model.addAttribute("maxPage",5);
 
