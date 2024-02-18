@@ -212,9 +212,9 @@
     <div>
         <table class="table">
             <colgroup>
-                <col style="width:15%">
-                <col style="width:70%">
-                <col style="width:15%">
+                <col style="width:15%"/>
+                <col style="width:70%"/>
+                <col style="width:15%"/>
             </colgroup>
             <thead>
             <tr class="text-center">
@@ -246,8 +246,9 @@
                                          th:value="${cartItem.count}" min="1"
                                          onchange="changeCount(this)" class="form-control mr-2" >
                                     <button type="button" class="close" aria-label="Close">
-                                        <span aria-hidden="true" th:data-id="${cartItem.cartItemId}"
-                                        onclick="deleteCartItem(this)">&times;</span>
+<!--                                        <span aria-hidden="true" th:data-id="${cartItem.cartItemId}"-->
+<!--                                        onclick="deleteCartItem(this)">x</span>-->
+                                        <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">닫기</span>
                                     </button>
 
                             </span>
