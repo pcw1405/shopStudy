@@ -13,6 +13,7 @@ import com.shopClone.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -68,5 +69,31 @@ public class CartService {
         cartDetailDtoList =cartItemRepository.findCartDetailDtoList(cart.getId());
         return cartDetailDtoList;
     }
+
+    public boolean validateCartItem(Long cartItemId,String email){
+        Member curMember = memberRepository.findByEmail(email);
+        CartItem cartItem =cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        Member savedMember =cartItem.getCart().getMember();
+
+        if(!StringUtils.equals(curMember.getEmail(),savedMember.getEmail())){
+            return false;
+        }
+        return true;
+    }
+    public void updateCartItemCount(Long cartItemId,int count){
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        cartItem.updateCount(count);
+    }
+
+    public void deleteCartItem(Long cartItemId){
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        cartItemRepository.delete(cartItem);
+    }
+
+//    public Long orderCartItem(List<CartOrderDto>)
+
 
 }
