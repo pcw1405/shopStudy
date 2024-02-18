@@ -2,6 +2,8 @@ package com.shopClone.service;
 
 import com.shopClone.dto.CartDetailDto;
 import com.shopClone.dto.CartItemDto;
+import com.shopClone.dto.CartOrderDto;
+import com.shopClone.dto.OrderDto;
 import com.shopClone.entity.Cart;
 import com.shopClone.entity.CartItem;
 import com.shopClone.entity.Item;
@@ -93,7 +95,27 @@ public class CartService {
         cartItemRepository.delete(cartItem);
     }
 
-//    public Long orderCartItem(List<CartOrderDto>)
+    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email){
+        List<OrderDto> orderDtoList=new ArrayList<>();
+
+        for(CartOrderDto cartOrderDto : cartOrderDtoList){
+            CartItem cartItem = cartItemRepository
+                    .findById(cartOrderDto.getCartItemId())
+                    .orElseThrow(EntityNotFoundException::new);
+
+            OrderDto orderDto=new OrderDto();
+            orderDto.setItemId(cartItem.getItem().getId());
+            orderDto.setCount(cartItem.getCount());
+            orderDtoList.add(orderDto);
+        }
+
+        Long orderId = orderService.orders(orderDtoList,email);
+
+        for(CartOrderDto cartOrderDto : cartOrderDtoList){
+
+        }
+
+    }
 
 
 }

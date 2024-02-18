@@ -107,7 +107,7 @@
                   alert('로그인 후 이용해주세요');
                   location.href='/members/login';
               } else {
-                    alert(jqXHR.responseText);
+                    alert(jqXHR.responseJSON.message);
               }
 
 
@@ -160,7 +160,7 @@
                   alert('로그인 후 이용해주세요');
                   location.href='/members/login';
               } else {
-                    alert(jqXHR.responseText);
+                    alert(jqXHR.responseJSON.message);
               }
 
 
@@ -247,7 +247,7 @@
                                          onchange="changeCount(this)" class="form-control mr-2" >
                                     <button type="button" class="close" aria-label="Close">
                                         <span aria-hidden="true" th:data-id="${cartItem.cartItemId}"
-                                        onclick="deleteCartItem(this)">$times;</span>
+                                        onclick="deleteCartItem(this)">&times;</span>
                                     </button>
 
                             </span>
