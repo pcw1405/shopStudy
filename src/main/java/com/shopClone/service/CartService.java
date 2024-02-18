@@ -112,8 +112,13 @@ public class CartService {
         Long orderId = orderService.orders(orderDtoList,email);
 
         for(CartOrderDto cartOrderDto : cartOrderDtoList){
-
+            CartItem cartItem =cartItemRepository
+                    .findById(cartOrderDto.getCartItemId())
+                    .orElseThrow(EntityNotFoundException::new);
+            cartItemRepository.delete(cartItem);
+            // 장바구니를 비운다
         }
+        return orderId;
 
     }
 
