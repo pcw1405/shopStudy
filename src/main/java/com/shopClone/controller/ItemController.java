@@ -59,7 +59,7 @@ public class ItemController {
 
         return "redirect:/";
     }
-    @JsonBackReference
+
     @GetMapping(value = "/admin/item/{itemId}") // 수정목록 조회
     public String itemDtl(@PathVariable("itemId") Long itemId,Model model){
 
@@ -97,7 +97,7 @@ public class ItemController {
 
         return "redirect:/";
     }
-    @JsonBackReference
+
     @GetMapping(value ={"/admin/items","/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page")Optional<Integer> page,Model model){
         //검색 조건을 담고 있는 Dto = itemSearchDto

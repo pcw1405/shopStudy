@@ -161,7 +161,7 @@
             <span th:if="${item.itemSellStatus == T(com.shopClone.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                 판매중
             </span>
-            <span th:if="${item.itemSellStatus == T(com.shopClone.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+            <span th:unless="${item.itemSellStatus == T(com.shopClone.constant.ItemSellStatus).SELL}" class="badge btn-primary mgb-15">
                 품절
             </span>
             <div class="h4" th:text="${item.itemNm}"></div>
