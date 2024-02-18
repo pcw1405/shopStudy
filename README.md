@@ -33,7 +33,8 @@
 주문기록 페이지입니다.
 ![캡처_2024_02_16_15_35_52_499](https://github.com/pcw1405/shopStudy/assets/130324807/4335d494-7acb-4b3e-93e4-1fc802355d90)
 
-
+장바구니 페이지입니다. 
+![캡처_2024_02_19_04_35_23_374](https://github.com/pcw1405/shopStudy/assets/130324807/571e2685-3fd9-4658-bfb0-b2da2d52f5ba)
 
 
 
