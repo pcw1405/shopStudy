@@ -11,6 +11,8 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javassist.NotFoundException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,10 +56,23 @@ public class CommentServiceImpl implements CommentService{
         return updatedComments;
     }
 
-    private List<CommentDto> getCommentsByItemId(Long itemId) {
-        // 구현은 해당 상품에 대한 댓글 목록을 조회하는 로직을 작성해야 합니다.
-        // 여기서는 생략하고 실제 프로젝트에서는 해당 로직을 추가해주세요.
-        // ...
-        return null;
+    public List<CommentDto> getCommentsByItemId(Long itemId) {
+        List<Comment> comments = commentRepository.findByItemId(itemId);
+        List<CommentDto> commentDtoList = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            CommentDto commentDto = new CommentDto();
+            commentDto.setId(comment.getId());
+//            System.out.println(comment.getId());
+            commentDto.setContent(comment.getContent());
+//            System.out.println(comment.getContent());
+            commentDto.setAuthorId(comment.getAuthor().getId());
+            commentDto.setCreatedAt(comment.getCreatedAt());
+            commentDto.setItemId(comment.getItem().getId());
+
+            commentDtoList.add(commentDto);
+        }
+
+        return commentDtoList;
     }
 }

@@ -135,7 +135,7 @@
         },
                 success: function (result) {
                     // 성공 시 댓글 목록을 업데이트하고 화면에 표시
-                    //updateCommentList(result);
+                    updateCommentList(result);
                     // 입력 폼 초기화
                     $("#commentContent").val("");
                 },
@@ -144,6 +144,39 @@
                 }
         });
     }
+
+    function updateCommentList(commentList) {
+        var commentListDiv = $("#commentList");
+        commentListDiv.empty(); // 기존 댓글 목록 초기화
+
+        if (commentList && commentList.length > 0) {
+            for (var i = 0; i < commentList.length; i++) {
+                var comment = commentList[i];
+                var commentHtml = '<div class="comment">' +
+                                      '<p>' + comment.content + '</p>' +
+                                      '<p>작성자: ' + comment.authorId + '</p>' +
+                                      '<p>작성일시: ' + comment.createdAt + '</p>' +
+                                   '</div>';
+                commentListDiv.append(commentHtml);
+            }
+        } else {
+            commentListDiv.html('<p>댓글이 없습니다.</p>');
+        }
+    }
+    $(document).ready(function () {
+        // 초기에 서버에서 댓글 목록을 가져와서 업데이트
+        $.ajax({
+            url: "/getByItemId/" + $("#itemId").val(), // itemId에 해당하는 댓글 목록 가져오는 엔드포인트
+            type: "GET",
+            success: function (result) {
+                // 성공 시 댓글 목록을 업데이트하고 화면에 표시
+                updateCommentList(result);
+            },
+            error: function (error) {
+                console.log("댓글 목록 가져오기 실패: " + error.responseText);
+            }
+        });
+    });
 
 
     </script>

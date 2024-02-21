@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -36,9 +34,15 @@ public class CommentController {
         System.out.println(commentDto.getAuthorId());
 //        System.out.println(commentDto.getId());
      List<CommentDto> updatedComments = commentServiceImpl.addComment(commentDto);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(updatedComments, HttpStatus.OK);
 
         // pricipal이 바로 id를 가져올 수 있는 것은 아니다( load메서드 설정을 볼 때)
+    }
+
+    @GetMapping("/getByItemId/{itemId}")
+    public ResponseEntity<List<CommentDto>> getCommentsByItemId(@PathVariable Long itemId) {
+        List<CommentDto> comments = commentServiceImpl.getCommentsByItemId(itemId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
 
