@@ -118,6 +118,34 @@
 
        }
 
+      function addComment() {
+            var content = $("#commentContent").val();
+            var itemId = $("#itemId").val();
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+             var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+    $.ajax({
+        url: "/addComment",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({content: content, itemId: itemId}),
+        beforeSend: function(xhr){
+            // CSRF 토큰을 요청 헤더에 포함시킴
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+                success: function (result) {
+                    // 성공 시 댓글 목록을 업데이트하고 화면에 표시
+                    //updateCommentList(result);
+                    // 입력 폼 초기화
+                    $("#commentContent").val("");
+                },
+                error: function (error) {
+                    console.log("댓글 등록 실패: " + error.responseText);
+                }
+        });
+    }
+
+
     </script>
 </th:block>
 
@@ -207,7 +235,14 @@
     <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
         <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}"  th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800" >
     </div>
-    
+
+    <div>
+        <input type="text" id="commentContent" placeholder="댓글을 입력하세요">
+        <button onclick="addComment()">댓글 등록</button>
+    </div>
+    <div id="commentList">
+        <!-- 댓글 목록이 여기에 동적으로 추가될 것입니다 -->
+    </div>
 </div>
 
 </html>

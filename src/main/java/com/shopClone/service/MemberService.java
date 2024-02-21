@@ -43,7 +43,7 @@ public class MemberService implements UserDetailsService {
                         //배열로 반환되어 문자열로 변환해서 넣어줘야함
                         .build();
 
-
+        //userDetail을 overide해서 커스텀하는 방법 생각 필요
         }
 
 
