@@ -37,7 +37,8 @@
 ![캡처_2024_02_19_04_35_23_374](https://github.com/pcw1405/shopStudy/assets/130324807/571e2685-3fd9-4658-bfb0-b2da2d52f5ba)
 
 자체적으로 구현한 댓글기능입니다 
-![캡처_2024_02_21_22_08_57_485](https://github.com/pcw1405/shopStudy/assets/130324807/9723ca05-e8b7-4f59-a629-9ba4a6543962)
+![캡처_2024_02_23_02_23_12_399](https://github.com/pcw1405/shopStudy/assets/130324807/647dc08e-86bd-4057-8aa9-ef18e69968e7)
+
 
 자체적으로 구현한 구글아이디를 연동한 로그인 기능입니다. 
 ![캡처_2024_02_23_01_35_45_257](https://github.com/pcw1405/shopStudy/assets/130324807/4ab1c891-4e1e-433b-a431-0fd2a6db33c4)
