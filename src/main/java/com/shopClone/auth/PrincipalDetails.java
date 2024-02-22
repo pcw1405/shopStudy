@@ -3,6 +3,7 @@ package com.shopClone.auth;
 import com.shopClone.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -39,12 +40,17 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection =new ArrayList<>();
+//        String role = (String) attributes.get("role");
+//        System.out.println("권한정보 테스트"+role);
 
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
+                System.out.println("제대로 롤을 반환하는지 test2 "+member.getRole().toString());
                 return member.getRole().toString(); }
         });
+
+        collection.add(new SimpleGrantedAuthority("ROLE_" + member.getRole().toString()));
         return collection;
     }
 
