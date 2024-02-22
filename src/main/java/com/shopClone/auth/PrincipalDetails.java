@@ -12,14 +12,29 @@ import java.util.Collection;
 import java.util.Map;
 
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private Member member;
     protected PrincipalDetails(Member member){
         this.member=member;
     }
 
+    private Map<String, Object> attributes;
 
+    public PrincipalDetails(Member member, Map<String, Object> attributes) {
+        this.member = member;
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

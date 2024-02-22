@@ -2,9 +2,7 @@ package com.shopClone.entity;
 
 import com.shopClone.constant.Role;
 import com.shopClone.dto.MemberFormDto;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -15,6 +13,7 @@ import java.security.Timestamp;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Member  extends BaseEntity{
     @Id
     @Column(name="member_id")
@@ -36,7 +35,8 @@ public class Member  extends BaseEntity{
     private Timestamp loginDate; // 로그인 한 날짜
     public static Member createMember(MemberFormDto memberFormDto,
                                       PasswordEncoder passwordEncoder){
-        Member member = new Member();
+        Member member;
+        member = new Member();
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
@@ -44,6 +44,20 @@ public class Member  extends BaseEntity{
         member.setPassword(password);
         member.setRole(Role.ADMIN);
         return member;
+    }
+
+    @Builder
+    public Member(int id, String name, String password, String email, Role role,
+                  String provider, String providerId, Timestamp loginDate) {
+        this.id = (long) id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+        this.loginDate = loginDate;
+
     }
     //비밀번호 암호화
 

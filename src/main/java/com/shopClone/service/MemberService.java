@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService {
+public class MemberService  {
 //        implements UserDetailsService
         private final MemberRepository memberRepository;
 
@@ -29,23 +29,23 @@ public class MemberService implements UserDetailsService {
                         throw new IllegalStateException("이미 가입된 회원입니다");
                 }
         }
-        @Override
-        public UserDetails loadUserByUsername(String email) throws
-                UsernameNotFoundException{
-                Member member =memberRepository.findByEmail(email);
-
-                if(member==null){
-                        throw new UsernameNotFoundException(email);
-                }
-                return User.builder()
-                        .username(member.getEmail())
-                        .password(member.getPassword())
-                        .roles(member.getRole().toString())
-                        //배열로 반환되어 문자열로 변환해서 넣어줘야함
-                        .build();
-
-        //userDetail을 overide해서 커스텀하는 방법 생각 필요
-        }
+//        @Override
+//        public UserDetails loadUserByUsername(String email) throws
+//                UsernameNotFoundException{
+//                Member member =memberRepository.findByEmail(email);
+//
+//                if(member==null){
+//                        throw new UsernameNotFoundException(email);
+//                }
+//                return User.builder()
+//                        .username(member.getEmail())
+//                        .password(member.getPassword())
+//                        .roles(member.getRole().toString())
+//                        //배열로 반환되어 문자열로 변환해서 넣어줘야함
+//                        .build();
+//
+//        //userDetail을 overide해서 커스텀하는 방법 생각 필요
+//        }
 
 
 
