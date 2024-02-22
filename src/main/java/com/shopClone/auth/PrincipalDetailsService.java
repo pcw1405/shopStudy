@@ -25,19 +25,19 @@ public class PrincipalDetailsService implements UserDetailsService  {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        System.out.println("username = " + username);
+        System.out.println("이메일인지 테스트중 -> username = " + username);
         Member memberEntity =memberRepository.findByEmail(username);
-
+        System.out.println("role 제대로 되었는지 테스트 -> role = " + memberEntity.getRole());
         if(memberEntity !=null){
             User.builder()
                     .username(memberEntity.getEmail())
                     .password(memberEntity.getPassword())
                     .roles(memberEntity.getRole().toString())
-                    //배열로 반환되어 문자열로 변환해서 넣어줘야함
                     .build();
+
             return new PrincipalDetails(memberEntity);
 
         }
-        return null;
+        throw new UsernameNotFoundException("User not found with email: " + username);
     }
 }
