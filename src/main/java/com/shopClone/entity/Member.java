@@ -3,6 +3,7 @@ package com.shopClone.entity;
 import com.shopClone.constant.Role;
 import com.shopClone.dto.MemberFormDto;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -34,13 +35,13 @@ public class Member  extends BaseEntity{
 
     private Timestamp loginDate; // 로그인 한 날짜
     public static Member createMember(MemberFormDto memberFormDto,
-                                      PasswordEncoder passwordEncoder){
+                                      BCryptPasswordEncoder bCryptPasswordEncoder){
         Member member;
         member = new Member();
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
-        String password = passwordEncoder.encode(memberFormDto.getPassword());
+        String password = bCryptPasswordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setRole(Role.ADMIN);
         return member;

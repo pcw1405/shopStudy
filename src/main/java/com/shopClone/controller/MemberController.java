@@ -5,6 +5,7 @@ import com.shopClone.dto.MemberFormDto;
 import com.shopClone.entity.Member;
 import com.shopClone.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import static org.codehaus.groovy.runtime.DefaultGroovyMethods.printf;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
     @JsonBackReference
     @GetMapping(value = "/new")
     public String memberForm(Model model){
