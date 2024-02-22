@@ -1,5 +1,6 @@
 package com.shopClone.config;
 
+import com.shopClone.auth.PrincipalOauth2UserService;
 import com.shopClone.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
 
 @Configuration
 @EnableWebSecurity
@@ -20,10 +22,16 @@ public class SecurityConfig {
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
 
+   @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+       return new BCryptPasswordEncoder();
+  }
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.formLogin()
-                .loginPage("/members/login") //로그인 페이지 url 설정
+          .loginPage("/members/login") //로그인 페이지 url 설정
                 .defaultSuccessUrl("/") // 성공시 이동할 url
                 .usernameParameter("email") //로그인시 사용할 피라미터 이름으로 eamil 지정
                 .failureUrl("/members/login/error")
