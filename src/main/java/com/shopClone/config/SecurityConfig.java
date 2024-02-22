@@ -17,6 +17,8 @@ public class SecurityConfig {
 
     @Autowired
     MemberService memberService;
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -37,6 +39,11 @@ public class SecurityConfig {
                 .mvcMatchers("/","/members/**","/item/**","/images/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN") // ADMIN role일 경우 접근 가능
                 .anyRequest().authenticated()
+                .and()
+                .oauth2Login()
+                .loginPage("/members/login")  // 구글로그인 성공 이후에 후처리가 필요
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService)
         ;
 
         http.exceptionHandling()

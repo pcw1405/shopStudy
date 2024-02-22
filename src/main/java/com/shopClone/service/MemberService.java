@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
+//        implements UserDetailsService
         private final MemberRepository memberRepository;
 
         public Member saveMember(Member member){
