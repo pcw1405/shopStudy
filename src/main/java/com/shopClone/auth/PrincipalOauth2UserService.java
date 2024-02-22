@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-    // 구글링 결과PrincipalOauth2UserService extends DefaultOAuth2UserService을, loaduser을 구현해야한다 
+    // 구글링 결과PrincipalOauth2UserService extends DefaultOAuth2UserService을, loaduser을 구현해야한다
     // 구글로부터 받은 userRequest 데이터에 대한 후처리가 되는 함수
 
     @Autowired
@@ -40,11 +40,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         System.out.println("userRequest = " + super.loadUser(userRequest).getAttributes());
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-      // 회원가입을 강제로 진행해볼 예정
+        // 회원가입을 강제로 진행해볼 예정
         String provider = userRequest.getClientRegistration().getRegistrationId(); // google
         String providerId = oAuth2User.getAttribute("sub");
         String username = provider + "_" + providerId; // google_105156291955329144943
-       String password = bCryptPasswordEncoder.encode("1111");
+        String password = bCryptPasswordEncoder.encode("1111");
         String email = oAuth2User.getAttribute("email");
         String role = "ADMIN";
         Member memberEntity = memberRepository.findByEmail(email);
@@ -61,7 +61,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .build();
             memberRepository.save(memberEntity);
         }else {
-        System.out.println("구글 로그인을 이미 한적이 있습니다. 당신은 자동회원가입이 되어 있습니다.");
+            System.out.println("구글 로그인을 이미 한적이 있습니다. 당신은 자동회원가입이 되어 있습니다.");
         }
 
         return new PrincipalDetails(memberEntity, oAuth2User.getAttributes());
