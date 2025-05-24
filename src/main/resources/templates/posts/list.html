@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 목록</title>
+</head>
+<body>
+<h1>게시글 목록</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>작성자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.title}">제목</td>
+        <td th:text="${post.author.name}">작성자</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

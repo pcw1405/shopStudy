@@ -28,6 +28,18 @@ public class Member  extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    ///
+    @OneToOne
+    @JoinColumn(name = "employee_id")  // 외래키 이름 지정
+    private Employee employee;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     // provider / providerId 추가
     private String provider; // 값을 받아온 도메인('google')
