@@ -42,9 +42,9 @@ public class SecurityConfig {
 
         ;
         http.authorizeRequests()  // 시큐리티 처리에 httpServletRequest를 이용한다는 의미
-                .mvcMatchers("/css/**","/js/**","/img/**").permitAll()
+                .mvcMatchers("/css/**","/js/**","/img/**","ws/chat/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()  // Allow access to favicon.ico
-                .mvcMatchers("/","/members/**","/item/**","/images/**").permitAll()
+                .mvcMatchers("/","/chat/**","/members/**","/item/**","/images/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN") // ADMIN role일 경우 접근 가능
                 .anyRequest().authenticated()
                 .and()

@@ -17,4 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "p.team IN :teams")
     List<Post> findAccessiblePosts(@Param("employee") Employee employee,
                                    @Param("teams") List<Team> teams);
+
+    ///굳이 쿼리로 하는 것은 이것이 빠르기 때문이다
 }
