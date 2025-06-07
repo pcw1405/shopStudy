@@ -30,20 +30,20 @@ public class Post {
     private Employee author;
 
     // 열람 권한이 있는 팀들
-    @ManyToMany
-    @JoinTable(
-            name = "post_team_access",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
-    private List<Team> readableTeams = new ArrayList<>();
-
-    // 열람 권한이 있는 개별 직원들
-    @ManyToMany
-    @JoinTable(
-            name = "post_employee_access",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    private List<Employee> readableEmployees = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "post_team_access",
+//            joinColumns = @JoinColumn(name = "post_id"),
+//            inverseJoinColumns = @JoinColumn(name = "team_id")
+//    )
+//    private List<Team> readableTeams = new ArrayList<>();
+//
+//    // 열람 권한이 있는 개별 직원들
+//    @ManyToMany
+//    @JoinTable(
+//            name = "post_employee_access",
+//            joinColumns = @JoinColumn(name = "post_id"),
+//            inverseJoinColumns = @JoinColumn(name = "employee_id")
+//    )
+//    private List<Employee> readableEmployees = new ArrayList<>();
 }

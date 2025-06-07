@@ -11,12 +11,12 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     // 현재 로그인한 직원 기준 열람 가능한 글 목록
-    @Query("SELECT p FROM Post p WHERE " +
-            "p.author = :employee OR " +
-            ":employee MEMBER OF p.readableEmployees OR " +
-            "p.team IN :teams")
-    List<Post> findAccessiblePosts(@Param("employee") Employee employee,
-                                   @Param("teams") List<Team> teams);
+//    @Query("SELECT p FROM Post p WHERE " +
+//            "p.author = :employee OR " +
+//            ":employee MEMBER OF p.readableEmployees OR " +
+//            "p.team IN :teams")
+//    List<Post> findAccessiblePosts(@Param("employee") Employee employee,
+//                                   @Param("teams") List<Team> teams);
 
     ///굳이 쿼리로 하는 것은 이것이 빠르기 때문이다
 }
