@@ -51,3 +51,8 @@
 # 사용기술 
 
 HTML, CSS, JavaScript , Bootstrap, Spring Boot, Java, MySQL
+
+# 참고 자료글
+https://doongjun.tistory.com/92#:~:text=,%EC%82%AC%EC%9A%A9%EC%9E%90%2F%EC%97%AD%ED%95%A0%29%EC%9D%84%20%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94%EB%8D%B0%20%EC%9A%A9%EC%9D%B4%ED%95%98%EB%8B%A4
+
+
