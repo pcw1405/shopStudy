@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.util.List;
@@ -30,5 +31,23 @@ public class PostController {
         List<Post> posts = postService.findReadablePosts(member);
         model.addAttribute("posts", posts);
         return "posts/list";
+    }
+
+    @GetMapping("/posts/{id}")
+    public String viewPost(@PathVariable Long id, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/members/login";
+        }
+
+        String email = principal.getName();
+        Member member = memberRepository.findByEmail(email);
+        Post post = postService.findPostById(id);
+
+        if (!postService.canView(post, member.getEmployee())) {
+            return "error/403"; // 권한 없을 때
+        }
+
+        model.addAttribute("post", post);
+        return "posts/detail";
     }
 }
