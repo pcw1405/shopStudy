@@ -41,18 +41,30 @@
     }
   </style>
 </head>
-<body>
+<body> <!-- ✅ 올바른 위치에 body 시작 -->
+
 <h1 th:text="${post.title}">제목</h1>
 <p><strong>작성자:</strong> <span th:text="${post.author.name}">작성자</span></p>
 <p th:text="${post.content}">내용</p>
 
 <div class="btn-container">
-  <!-- 수정 권한이 있을 때만 수정 버튼 노출 -->
   <div th:if="${canEdit}">
     <a th:href="@{'/posts/edit/' + ${post.id}}">수정하기</a>
   </div>
-
   <a href="/posts">목록으로</a>
 </div>
+
+<div th:if="${canEdit}" style="margin-top: 40px">
+  <form th:action="@{'/posts/update/' + ${post.id}}" method="post">
+    <label for="title">제목</label>
+    <input type="text" id="title" name="title" th:value="${post.title}" required />
+
+    <label for="content">내용</label>
+    <textarea id="content" name="content" rows="6" required th:text="${post.content}"></textarea>
+
+    <input type="submit" value="수정 완료">
+  </form>
+</div>
+
 </body>
 </html>

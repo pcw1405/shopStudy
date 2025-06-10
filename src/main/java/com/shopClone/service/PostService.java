@@ -9,6 +9,7 @@ import com.shopClone.entity.PostPermission;
 import com.shopClone.repository.PostPermissionRepository;
 import com.shopClone.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +58,17 @@ public class PostService {
                         employee, employee.getTeam(), PermissionType.EDIT)
                 .stream()
                 .anyMatch(p -> p.getPost().getId().equals(post.getId()));
+    }
+
+    /// 수정 기능(데이트베이스 반영)
+    public void updatePost(Long id, String title, String content, Employee employee) {
+        Post post = findPostById(id);
+        if (!canEdit(post, employee)) {
+            throw new AccessDeniedException("수정 권한이 없습니다.");
+        }
+        post.setTitle(title);
+        post.setContent(content);
+        postRepository.save(post);
     }
 
 }
