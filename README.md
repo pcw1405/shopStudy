@@ -54,5 +54,7 @@ HTML, CSS, JavaScript , Bootstrap, Spring Boot, Java, MySQL
 
 # 참고 자료글
 https://doongjun.tistory.com/92#:~:text=,%EC%82%AC%EC%9A%A9%EC%9E%90%2F%EC%97%AD%ED%95%A0%29%EC%9D%84%20%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94%EB%8D%B0%20%EC%9A%A9%EC%9D%B4%ED%95%98%EB%8B%A4
+ - Spring Security ACL 조사 
 
-
+https://velog.io/@joongi007/%EC%9B%B9-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EA%B6%8C%ED%95%9C-%EA%B4%80%EB%A6%AC-DB-%EC%84%A4%EA%B3%84-%EC%83%81%EC%84%B8%EC%84%A4%EA%B3%84-%EB%B0%8F-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C%EC%9A%B0
+ - 게시판 권한 관리 데이터베이스 설계
