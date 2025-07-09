@@ -53,6 +53,9 @@
 HTML, CSS, JavaScript , Bootstrap, Spring Boot, Java, MySQL
 
 # 참고 자료글
+https://velog.io/@kimdy0915/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8Spring-Boot%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%B2%A1%EC%97%94%EB%93%9C-%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0
+-기본적인 설계
+
 https://doongjun.tistory.com/92#:~:text=,%EC%82%AC%EC%9A%A9%EC%9E%90%2F%EC%97%AD%ED%95%A0%29%EC%9D%84%20%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94%EB%8D%B0%20%EC%9A%A9%EC%9D%B4%ED%95%98%EB%8B%A4
  - Spring Security ACL 조사 
 
