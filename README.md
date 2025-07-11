@@ -53,6 +53,7 @@
 HTML, CSS, JavaScript , Bootstrap, Spring Boot, Java, MySQL
 
 # 참고 자료글
+
 https://velog.io/@kimdy0915/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8Spring-Boot%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%B2%A1%EC%97%94%EB%93%9C-%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0
 -기본적인 설계
 
@@ -64,3 +65,6 @@ https://velog.io/@joongi007/%EC%9B%B9-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EA%B6%8C%ED%9
 
 https://laycoder.tistory.com/106
  - 게시판 설계 팁 
+
+https://talanton.tistory.com/51#:~:text=,%EB%95%8C%2C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%96%88%EC%9D%84%20%EB%95%8C%2C%20%EA%B4%80%EB%A6%AC%EC%9E%90
+- 여러개의 게시판이 필요할 때
