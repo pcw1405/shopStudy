@@ -68,3 +68,5 @@ https://laycoder.tistory.com/106
 
 https://talanton.tistory.com/51#:~:text=,%EB%95%8C%2C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%96%88%EC%9D%84%20%EB%95%8C%2C%20%EA%B4%80%EB%A6%AC%EC%9E%90
 - 여러개의 게시판이 필요할 때
+ https://freehoon.tistory.com/128#:~:text=%EC%88%98%20%EC%9E%88%EB%8F%84%EB%A1%9D%20%ED%95%98%EB%A0%A4%EA%B3%A0%20%ED%95%A9%EB%8B%88%EB%8B%A4,%EC%86%90%20%EC%89%BD%EA%B2%8C%20%EC%B6%94%EA%B0%80%ED%95%B4%20%EB%B3%B4%EB%8F%84%EB%A1%9D%20%ED%95%98%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4
+- 개사판 카테고리 데이터베이스 설계 관련
