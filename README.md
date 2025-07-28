@@ -36,14 +36,15 @@
 장바구니 페이지입니다. 
 ![캡처_2024_02_19_04_35_23_374](https://github.com/pcw1405/shopStudy/assets/130324807/571e2685-3fd9-4658-bfb0-b2da2d52f5ba)
 
-자체적으로 구현한 댓글기능입니다 
-![캡처_2024_02_23_02_23_12_399](https://github.com/pcw1405/shopStudy/assets/130324807/647dc08e-86bd-4057-8aa9-ef18e69968e7)
-
 
 자체적으로 구현한 구글아이디를 연동한 로그인 기능입니다. 
+
 ![캡처_2024_02_23_01_35_45_257](https://github.com/pcw1405/shopStudy/assets/130324807/4ab1c891-4e1e-433b-a431-0fd2a6db33c4)
 
 
+게시판 기능을 위한 ERD 다이어그램 입니다.
+
+<img width="1974" height="1356" alt="ERD다이어그램 임시" src="https://github.com/user-attachments/assets/45f8dc12-9419-41a5-b5bf-b63bddac0c40" />
 
 
 
@@ -58,13 +59,13 @@ https://velog.io/@kimdy0915/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8Spring
 -기본적인 설계
 
 https://doongjun.tistory.com/92#:~:text=,%EC%82%AC%EC%9A%A9%EC%9E%90%2F%EC%97%AD%ED%95%A0%29%EC%9D%84%20%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94%EB%8D%B0%20%EC%9A%A9%EC%9D%B4%ED%95%98%EB%8B%A4
- - Spring Security ACL 조사 
+- Spring Security ACL 조사 
 
 https://velog.io/@joongi007/%EC%9B%B9-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EA%B6%8C%ED%95%9C-%EA%B4%80%EB%A6%AC-DB-%EC%84%A4%EA%B3%84-%EC%83%81%EC%84%B8%EC%84%A4%EA%B3%84-%EB%B0%8F-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C%EC%9A%B0
- - 게시판 권한 관리 데이터베이스 설계
+- 게시판 권한 관리 데이터베이스 설계
 
 https://laycoder.tistory.com/106
- - 게시판 설계 팁 
+- 게시판 설계 팁 
 
 https://talanton.tistory.com/51#:~:text=,%EB%95%8C%2C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%96%88%EC%9D%84%20%EB%95%8C%2C%20%EA%B4%80%EB%A6%AC%EC%9E%90
 - 여러개의 게시판이 필요할 때
