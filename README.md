@@ -56,18 +56,25 @@ HTML, CSS, JavaScript , Bootstrap, Spring Boot, Java, MySQL
 # 참고 자료글
 
 https://velog.io/@kimdy0915/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8Spring-Boot%EB%A1%9C-%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%B2%A1%EC%97%94%EB%93%9C-%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0
--기본적인 설계
+
+- 기본적인 설계
 
 https://doongjun.tistory.com/92#:~:text=,%EC%82%AC%EC%9A%A9%EC%9E%90%2F%EC%97%AD%ED%95%A0%29%EC%9D%84%20%EC%A0%95%EC%9D%98%ED%95%98%EB%8A%94%EB%8D%B0%20%EC%9A%A9%EC%9D%B4%ED%95%98%EB%8B%A4
+
 - Spring Security ACL 조사 
 
 https://velog.io/@joongi007/%EC%9B%B9-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EA%B6%8C%ED%95%9C-%EA%B4%80%EB%A6%AC-DB-%EC%84%A4%EA%B3%84-%EC%83%81%EC%84%B8%EC%84%A4%EA%B3%84-%EB%B0%8F-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C%EC%9A%B0
+
 - 게시판 권한 관리 데이터베이스 설계
 
 https://laycoder.tistory.com/106
+
 - 게시판 설계 팁 
 
 https://talanton.tistory.com/51#:~:text=,%EB%95%8C%2C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%96%88%EC%9D%84%20%EB%95%8C%2C%20%EA%B4%80%EB%A6%AC%EC%9E%90
+
 - 여러개의 게시판이 필요할 때
- https://freehoon.tistory.com/128#:~:text=%EC%88%98%20%EC%9E%88%EB%8F%84%EB%A1%9D%20%ED%95%98%EB%A0%A4%EA%B3%A0%20%ED%95%A9%EB%8B%88%EB%8B%A4,%EC%86%90%20%EC%89%BD%EA%B2%8C%20%EC%B6%94%EA%B0%80%ED%95%B4%20%EB%B3%B4%EB%8F%84%EB%A1%9D%20%ED%95%98%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4
+
+https://freehoon.tistory.com/128#:~:text=%EC%88%98%20%EC%9E%88%EB%8F%84%EB%A1%9D%20%ED%95%98%EB%A0%A4%EA%B3%A0%20%ED%95%A9%EB%8B%88%EB%8B%A4,%EC%86%90%20%EC%89%BD%EA%B2%8C%20%EC%B6%94%EA%B0%80%ED%95%B4%20%EB%B3%B4%EB%8F%84%EB%A1%9D%20%ED%95%98%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4
+
 - 개사판 카테고리 데이터베이스 설계 관련
