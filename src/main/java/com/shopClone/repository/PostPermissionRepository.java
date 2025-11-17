@@ -20,4 +20,7 @@ public interface PostPermissionRepository extends JpaRepository<PostPermission, 
     List<PostPermission> findByEmpOrTeamWithPermission(@Param("employee") Employee employee,
                                                        @Param("team") Team team,
                                                        @Param("permission") PermissionType permission);
+
+    boolean existsByPostIdAndPermissionAndEmployeeId(Long postId, com.shopClone.constant.PermissionType permission, Long employeeId);
+    boolean existsByPostIdAndPermissionAndTeamId(Long postId, com.shopClone.constant.PermissionType permission, Long teamId);
 }

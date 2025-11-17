@@ -1,6 +1,10 @@
 package com.shopClone.constant;
 
-public enum Role {
+import lombok.Getter;
 
-    USER,ADMIN
+@Getter
+public enum Role {
+    USER,
+    ADMIN;
 }
+

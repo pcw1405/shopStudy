@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="member")
@@ -29,7 +30,7 @@ public class Member  extends BaseEntity{
     private Role role;
 
     ///
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")  // 외래키 이름 지정
     private Employee employee;
 

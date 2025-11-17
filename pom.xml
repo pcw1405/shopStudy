@@ -14,7 +14,7 @@
 	<name>shopClone</name>
 	<description>shop project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<repositories>
 		<repository>

@@ -1,6 +1,6 @@
 package com.shopClone.dto;
 
-import com.shopClone.entity.EmployeeLevel;
+import com.shopClone.constant.EmployeeLevel;
 import lombok.Getter;
 import lombok.Setter;
 
