@@ -5,13 +5,21 @@ import com.shopClone.entity.BoardPermission;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardPermissionRepository extends JpaRepository<BoardPermission ,Long> {
-    boolean existByBoardTypeId(Long boardTypeId); // 권한 레코드 유무로 '공개 보드' 판별
-    boolean existsByBoardTypeIdAndEmployeeIdAndPermission(Long boardTypeId, Long employeeId, PermissionType permission);
-    boolean existsByBoardTypeIdAndTeamIdAndPermission(Long boardTypeId, Long teamId, PermissionType permission);
 
-    // 수정 시 깔끔하게 재설정할 때 필요
-    long deleteByPostId(Long postId);
+    // ✅ 게시판 + 권한별 개수 (공개판 여부 판단용)
+    long countByBoardType_IdAndPermission(Long boardTypeId,
+                                          PermissionType permission);
 
-    long countByBoardTypeIdAndPermission(Long boardTypeId, com.shopClone.constant.PermissionType permission);
+    // ✅ 특정 게시판에서, 특정 직원이 특정 권한을 갖고 있는지
+    boolean existsByBoardType_IdAndEmployee_IdAndPermission(Long boardTypeId,
+                                                            Long employeeId,
+                                                            PermissionType permission);
 
+    // ✅ 특정 게시판에서, 특정 팀이 특정 권한을 갖고 있는지
+    boolean existsByBoardType_IdAndTeam_IdAndPermission(Long boardTypeId,
+                                                        Long teamId,
+                                                        PermissionType permission);
+
+    // ❌ 이건 BoardPermission 엔티티에 post가 없으니까 삭제하는 게 맞음
+    // long deleteByPostId(Long postId);
 }

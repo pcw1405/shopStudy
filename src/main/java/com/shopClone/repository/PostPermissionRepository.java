@@ -14,13 +14,28 @@ import java.util.List;
 @Repository
 public interface PostPermissionRepository extends JpaRepository<PostPermission, Long> {
 
-    List<PostPermission> findByEmployeeAndPermissionType(Employee employee, PermissionType permissionType);
+    /** 직원 + 권한으로 조회 */
+    List<PostPermission> findByEmployeeAndPermission(Employee employee,
+                                                     PermissionType permission);
 
-    @Query("SELECT pp FROM PostPermission pp WHERE (pp.employee = :employee OR pp.team = :team) AND pp.permissionType = :permission")
+    /** 직원이나 팀이 특정 권한을 가진 PostPermission 목록 */
+    @Query(
+            "select pp " +
+                    "from PostPermission pp " +
+                    "where (pp.employee = :employee or pp.team = :team) " +
+                    "  and pp.permission = :permission"
+    )
     List<PostPermission> findByEmpOrTeamWithPermission(@Param("employee") Employee employee,
                                                        @Param("team") Team team,
                                                        @Param("permission") PermissionType permission);
 
-    boolean existsByPostIdAndPermissionAndEmployeeId(Long postId, com.shopClone.constant.PermissionType permission, Long employeeId);
-    boolean existsByPostIdAndPermissionAndTeamId(Long postId, com.shopClone.constant.PermissionType permission, Long teamId);
+    /** 직원 단위 존재 여부 확인 */
+    boolean existsByPostIdAndPermissionAndEmployeeId(Long postId,
+                                                     PermissionType permission,
+                                                     Long employeeId);
+
+    /** 팀 단위 존재 여부 확인 */
+    boolean existsByPostIdAndPermissionAndTeamId(Long postId,
+                                                 PermissionType permission,
+                                                 Long teamId);
 }
