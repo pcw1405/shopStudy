@@ -27,15 +27,12 @@ public class PostService {
     private final BoardTypeRepository boardTypeRepository;
 
     /** 컨트롤러에서 로그인 Member를 받아 권한 반영 목록 제공 (간단 버전: 첫 페이지 20건) */
+    public List<Post> findReadablePosts(Member member, Long boardId) {
 
-    public List<Post> findReadablePosts(Member member) {
-
-        Long boardId = chooseDefaultBoardId();
         boolean boardPublic = isBoardPublic(boardId);
 
-        // 1) 로그인은 했지만 직원 정보가 없는 계정 (일반 회원 / 외부 고객)
+        // 1) 로그인은 했지만 직원 정보가 없는 계정
         if (member == null || member.getEmployee() == null) {
-            // 기본 게시판이 공개면 그냥 전체 목록 보여주기
             if (boardPublic) {
                 Page<Post> page = postRepository.findByBoardTypeId(
                         boardId,
@@ -43,11 +40,10 @@ public class PostService {
                 );
                 return page.getContent();
             }
-            // 비공개 보드는 직원만 보도록 비워서 리턴
             return List.of();
         }
 
-        // 2) 정상적인 직원 계정
+        // 2) 정상 직원 계정
         Employee emp = member.getEmployee();
         Long empId = emp.getId();
         Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
@@ -57,12 +53,49 @@ public class PostService {
                 empId,
                 teamId,
                 boardPublic,
-                PermissionType.READ,          // ✅ readPermission 파라미터
+                PermissionType.READ,
                 PageRequest.of(0, 20)
         );
 
         return page.getContent();
     }
+
+
+//    public List<Post> findReadablePosts(Member member) {
+//
+//        Long boardId = chooseDefaultBoardId();
+//        boolean boardPublic = isBoardPublic(boardId);
+//
+//        // 1) 로그인은 했지만 직원 정보가 없는 계정 (일반 회원 / 외부 고객)
+//        if (member == null || member.getEmployee() == null) {
+//            // 기본 게시판이 공개면 그냥 전체 목록 보여주기
+//            if (boardPublic) {
+//                Page<Post> page = postRepository.findByBoardTypeId(
+//                        boardId,
+//                        PageRequest.of(0, 20)
+//                );
+//                return page.getContent();
+//            }
+//            // 비공개 보드는 직원만 보도록 비워서 리턴
+//            return List.of();
+//        }
+//
+//        // 2) 정상적인 직원 계정
+//        Employee emp = member.getEmployee();
+//        Long empId = emp.getId();
+//        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+//
+//        Page<Post> page = postRepository.findVisiblePosts(
+//                boardId,
+//                empId,
+//                teamId,
+//                boardPublic,
+//                PermissionType.READ,          // ✅ readPermission 파라미터
+//                PageRequest.of(0, 20)
+//        );
+//
+//        return page.getContent();
+//    }
 
     public List<Post> findReadablePosts_demo(Member member) {
         Employee emp = member.getEmployee();
@@ -85,6 +118,33 @@ public class PostService {
 
         return page.getContent();
     }
+    //
+
+//    public List<Post> findReadablePosts(Member member, Long boardId) {
+//
+//        Long targetBoardId = (boardId != null)
+//                ? boardId
+//                : chooseDefaultBoardId();
+//
+//        boolean boardPublic = isBoardPublic(targetBoardId);
+//
+//        // 직원 아닌 계정 처리 생략...
+//
+//        Employee emp = member.getEmployee();
+//        Long empId = emp.getId();
+//        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+//
+//        Page<Post> page = postRepository.findVisiblePosts(
+//                targetBoardId,
+//                empId,
+//                teamId,
+//                boardPublic,
+//                PermissionType.READ,
+//                PageRequest.of(0, 20)
+//        );
+//
+//        return page.getContent();
+//    }
 
     /** 게시판이 공개판인지(READ 권한 레코드가 없는지) */
     private boolean isBoardPublic(Long boardId) {

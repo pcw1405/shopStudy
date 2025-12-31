@@ -1,7 +1,9 @@
 package com.shopClone.controller;
 
+import com.shopClone.entity.BoardType;
 import com.shopClone.entity.Member;
 import com.shopClone.entity.Post;
+import com.shopClone.repository.BoardTypeRepository;
 import com.shopClone.repository.MemberRepository;
 import com.shopClone.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +24,55 @@ public class PostController {
 
     private final PostService postService;
     private final MemberRepository memberRepository;
+    private final BoardTypeRepository boardTypeRepository;
+//    @GetMapping("/posts")
+//    public String listPosts(@RequestParam(required = false) Long boardId,
+//                            Model model,
+//                            Principal principal) {
+//        if (principal == null) {
+//            return "redirect:/members/login";
+//        }
+//        String email = principal.getName(); // 로그인한 사용자 email
+//        Member member = memberRepository.findByEmail(email);
+////        List<Post> posts = postService.findReadablePosts(member);
+//        List<Post> posts = postService.findReadablePosts(member, boardId);
+//
+//        model.addAttribute("posts", posts);
+//
+//        model.addAttribute("currentBoardId", boardId);
+//        return "posts/list";
+//    }
 
     @GetMapping("/posts")
-    public String listPosts(Model model, Principal principal) {
+    public String listPosts(
+            @RequestParam(required = false) Long boardId,
+            Model model,
+            Principal principal
+    ) {
         if (principal == null) {
             return "redirect:/members/login";
         }
-        String email = principal.getName(); // 로그인한 사용자 email
+
+        String email = principal.getName();
         Member member = memberRepository.findByEmail(email);
-        List<Post> posts = postService.findReadablePosts(member);
+
+        // 1) 탭용: 게시판 목록을 모델에 담기
+        List<BoardType> boards = boardTypeRepository.findAll();
+        model.addAttribute("boards", boards);
+
+        // 2) 선택 boardId가 없으면 첫 게시판을 기본값으로
+        Long selectedBoardId = (boardId != null)
+                ? boardId
+                : boards.stream().findFirst()
+                .map(BoardType::getId)
+                .orElseThrow(() -> new IllegalStateException("등록된 게시판이 없습니다."));
+
+        model.addAttribute("currentBoardId", selectedBoardId);
+
+        // 3) 핵심: 선택된 boardId로 조회
+        List<Post> posts = postService.findReadablePosts(member, selectedBoardId);
         model.addAttribute("posts", posts);
+
         return "posts/list";
     }
 

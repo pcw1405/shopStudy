@@ -30,7 +30,14 @@
 </head>
 <body>
 <h1>게시글 목록</h1>
-
+<div style="margin: 0 0 16px 0; display:flex; gap: 10px;">
+    <a th:each="b : ${boards}"
+       th:href="@{/posts(boardId=${b.id})}"
+       th:text="${b.name}"
+       th:style="${b.id} == ${currentBoardId} ? 'font-weight:bold;' : ''">
+        게시판
+    </a>
+</div>
 <table>
     <thead>
     <tr>
@@ -39,10 +46,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="post : ${posts}">
-        <td><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
-        <td th:text="${post.author.name}">작성자</td>
-    </tr>
+<!--    <tr th:each="post : ${posts}">-->
+<!--        <td><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>-->
+<!--        <td th:text="${post.author.name}">작성자</td>-->
+<!--    </tr>-->
+<tr th:each="post : ${posts}">
+    <td><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
+    <td th:text="${post.author.name}">작성자</td>
+</tr>
     </tbody>
 </table>
 
