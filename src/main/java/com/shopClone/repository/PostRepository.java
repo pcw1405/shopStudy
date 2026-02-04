@@ -14,6 +14,23 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @EntityGraph(attributePaths = {"author", "boardType"})
     Page<Post> findByBoardTypeId(Long boardTypeId, Pageable pageable);
 
+    // 2026년 1월 3일 추가...
+    // ✅ 공개 게시판에서 employee 없는 사용자(또는 외부)에게 보여줄 글
+    // = PostPermission(READ) 자체가 없는(=제한이 걸리지 않은) 글만
+    @EntityGraph(attributePaths = {"author", "boardType"})
+    @Query(
+            "select p from Post p " +
+                    "where p.boardType.id = :boardId " +
+                    " and not exists ( " +
+                    " select 1 from PostPermission pp " +
+                    " where pp.post.id = p.id " +
+                    " and pp.permission = :readPermission " +
+                    " )"
+    )
+    Page<Post> findPublicVisiblePosts(@Param("boardId") Long boardId,
+                                      @Param("readPermission") PermissionType readPermission,
+                                      Pageable pageable);
+
     /**
      * 권한 반영 목록 (EXISTS 기반)
      *
@@ -26,6 +43,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
      *     해당 팀/직원 또는 작성자만 read 가능
      * - 작성자는 PostPermission/BoardPermission과 상관없이 자신의 글은 항상 read 가능
      */
+    @EntityGraph(attributePaths = {"author", "boardType"})
     @Query(
             "select p " +
                     "from Post p " +
@@ -47,7 +65,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                     "                  and bp.permission = :readPermission " +
                     "                  and ( " +
                     "                        bp.employee.id = :empId " +
-                    "                     or bp.team.id = :teamId " +
+                    "                     or (:teamId is not null and bp.team.id = :teamId) " +
                     "                  ) " +
                     "           ) " +
                     "      ) " +
@@ -61,7 +79,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                     "          and pp2.permission = :readPermission " +  // ✅ permission 사용
                     "          and ( " +
                     "                pp2.employee.id = :empId " +
-                    "             or pp2.team.id = :teamId " +
+                    "             or (:teamId is not null and pp2.team.id = :teamId) " +
                     "          ) " +
                     "      ) " +
                     "      or p.author.id = :empId " +

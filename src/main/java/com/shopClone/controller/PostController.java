@@ -77,21 +77,19 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public String viewPost(@PathVariable Long id, Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/members/login";
-        }
+    public String viewPost(@PathVariable Long id,
+                           @RequestParam(required = false) Long boardId,
+                           Model model,
+                           Principal principal) {
 
-        String email = principal.getName();
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(principal.getName());
         Post post = postService.findPostById(id);
 
-        if (!postService.canView(post, member.getEmployee())) {
-            return "error/403";
-        }
+        if (!postService.canView(post, member)) return "error/403";
 
         model.addAttribute("post", post);
-        model.addAttribute("canEdit", postService.canEdit(post, member.getEmployee())); // <- 추가
+        model.addAttribute("canEdit", postService.canEdit(post, member));
+        model.addAttribute("returnBoardId", (boardId != null) ? boardId : post.getBoardType().getId());
 
         return "posts/detail";
     }
@@ -99,20 +97,20 @@ public class PostController {
     /// 수정기능을 위한 페이지
     // 수정 폼 이동
     @GetMapping("/posts/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model, Principal principal) {
-        if (principal == null) return "redirect:/members/login";
+    public String editForm(@PathVariable Long id,
+                           @RequestParam(required = false) Long boardId,
+                           Model model,
+                           Principal principal) {
 
-        String email = principal.getName();
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(principal.getName());
         Post post = postService.findPostById(id);
 
-        if (!postService.canEdit(post, member.getEmployee())) {
-            return "error/403";
-        }
+        if (!postService.canEdit(post, member)) return "error/403";
 
-        model.addAttribute("canEdit", postService.canEdit(post, member.getEmployee())); // 🔥 이 줄 추가!
         model.addAttribute("post", post);
-        return "posts/edit"; // 별도 수정 페이지로 이동 시
+        model.addAttribute("returnBoardId", (boardId != null) ? boardId : post.getBoardType().getId());
+
+        return "posts/edit";
     }
 
     // 수정 처리
@@ -120,14 +118,14 @@ public class PostController {
     public String updatePost(@PathVariable Long id,
                              @RequestParam String title,
                              @RequestParam String content,
+                             @RequestParam(required = false) Long boardId,
                              Principal principal) {
-        if (principal == null) return "redirect:/members/login";
 
-        String email = principal.getName();
-        Member member = memberRepository.findByEmail(email);
-        postService.updatePost(id, title, content, member.getEmployee());
+        Member member = memberRepository.findByEmail(principal.getName());
+        postService.updatePost(id, title, content, member);
 
-        return "redirect:/posts/" + id;
+        Long returnBoardId = (boardId != null) ? boardId : postService.findPostById(id).getBoardType().getId();
+        return "redirect:/posts/" + id + "?boardId=" + returnBoardId;
     }
 
 

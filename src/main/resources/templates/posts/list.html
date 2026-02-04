@@ -51,7 +51,10 @@
 <!--        <td th:text="${post.author.name}">작성자</td>-->
 <!--    </tr>-->
 <tr th:each="post : ${posts}">
-    <td><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
+    <td>
+        <a th:href="@{/posts/{id}(id=${post.id}, boardId=${currentBoardId})}"
+           th:text="${post.title}">제목</a>
+    </td>
     <td th:text="${post.author.name}">작성자</td>
 </tr>
     </tbody>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title th:text="${post.title}">게시글 상세</title>
+  <title>게시글 수정</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,58 +13,66 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     h1 {
-      font-size: 28px;
+      font-size: 24px;
       border-bottom: 2px solid #ccc;
       padding-bottom: 10px;
       margin-bottom: 20px;
     }
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      margin: 10px 0;
-    }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 15px;
-      text-decoration: none;
-      color: white;
-      background-color: #4CAF50;
-      border-radius: 5px;
-    }
-    a:hover {
-      background-color: #45a049;
+    label { display:block; margin-top: 12px; font-weight: bold; }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 14px;
     }
     .btn-container {
-      display: flex;
-      gap: 10px;
+      display:flex;
+      gap:10px;
+      margin-top: 18px;
     }
+    button, a.btn {
+      display:inline-block;
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: none;
+      text-decoration:none;
+      cursor:pointer;
+      color:#fff;
+      background:#4CAF50;
+      font-size: 14px;
+    }
+    button:hover { background:#45a049; }
+    a.btn.gray { background:#6c757d; }
+    a.btn.gray:hover { background:#5a6268; }
   </style>
 </head>
-<body> <!-- ✅ 올바른 위치에 body 시작 -->
+<body>
 
-<h1 th:text="${post.title}">제목</h1>
-<p><strong>작성자:</strong> <span th:text="${post.author.name}">작성자</span></p>
-<p th:text="${post.content}">내용</p>
+<h1>게시글 수정</h1>
 
-<div class="btn-container">
-  <div th:if="${canEdit}">
-    <a th:href="@{'/posts/edit/' + ${post.id}}">수정하기</a>
+<form th:action="@{/posts/update/{id}(id=${post.id})}" method="post">
+  <!-- 탭 유지용 -->
+  <input type="hidden" name="boardId" th:value="${returnBoardId}" />
+
+  <label for="title">제목</label>
+  <input type="text" id="title" name="title" th:value="${post.title}" required />
+
+  <label for="content">내용</label>
+  <textarea id="content" name="content" rows="10" required th:text="${post.content}"></textarea>
+
+  <div class="btn-container">
+    <button type="submit">수정 완료</button>
+
+    <!-- 취소: 상세로 돌아가기(탭 유지) -->
+    <a class="btn gray"
+       th:href="@{/posts/{id}(id=${post.id}, boardId=${returnBoardId})}">
+      취소
+    </a>
   </div>
-  <a href="/posts">목록으로</a>
-</div>
-
-<div th:if="${canEdit}" style="margin-top: 40px">
-  <form th:action="@{'/posts/update/' + ${post.id}}" method="post">
-    <label for="title">제목</label>
-    <input type="text" id="title" name="title" th:value="${post.title}" required />
-
-    <label for="content">내용</label>
-    <textarea id="content" name="content" rows="6" required th:text="${post.content}"></textarea>
-
-    <input type="submit" value="수정 완료">
-  </form>
-</div>
+</form>
 
 </body>
 </html>

@@ -14,6 +14,9 @@ import java.util.List;
 @Repository
 public interface PostPermissionRepository extends JpaRepository<PostPermission, Long> {
 
+    boolean existsByPostIdAndPermission(Long postId, PermissionType permission);
+
+
     /** 직원 + 권한으로 조회 */
     List<PostPermission> findByEmployeeAndPermission(Employee employee,
                                                      PermissionType permission);
