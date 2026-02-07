@@ -82,6 +82,7 @@ public class PostController {
                            Model model,
                            Principal principal) {
 
+        if (principal == null) return "redirect:/members/login";
         Member member = memberRepository.findByEmail(principal.getName());
         Post post = postService.findPostById(id);
 
@@ -102,6 +103,7 @@ public class PostController {
                            Model model,
                            Principal principal) {
 
+        if (principal == null) return "redirect:/members/login";
         Member member = memberRepository.findByEmail(principal.getName());
         Post post = postService.findPostById(id);
 
@@ -121,6 +123,7 @@ public class PostController {
                              @RequestParam(required = false) Long boardId,
                              Principal principal) {
 
+        if (principal == null) return "redirect:/members/login";
         Member member = memberRepository.findByEmail(principal.getName());
         postService.updatePost(id, title, content, member);
 

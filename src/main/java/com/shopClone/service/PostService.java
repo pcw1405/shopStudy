@@ -49,8 +49,9 @@ public class PostService {
         // 2) 정상 직원 계정
         Employee emp = member.getEmployee();
         Long empId = emp.getId();
-        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
-
+//        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : null;
+        // -1L은 안쓰는 것이 좋다...
 
         Page<Post> page = postRepository.findVisiblePosts(
                 boardId,
@@ -63,7 +64,15 @@ public class PostService {
         return page.getContent();
     }
 
-
+    private boolean hasPostPermissionByTeam(Long postId, PermissionType p, Long teamId) {
+        if (teamId == null) return false;
+        return postPermissionRepository.existsByPostIdAndPermissionAndTeamId(postId, p, teamId);
+    }
+//exists 성능적으로 볼 때 exists는 가볍다 ....
+    private boolean hasBoardPermissionByTeam(Long boardId, PermissionType p, Long teamId) {
+        if (teamId == null) return false;
+        return boardPermissionRepository.existsByBoardType_IdAndTeam_IdAndPermission(boardId, teamId, p);
+    }
 
 
 
@@ -95,7 +104,8 @@ public class PostService {
 
 
             Long empId = emp.getId();
-            Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : null;
+//            Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
 
 
     // 1) 작성자
@@ -109,9 +119,12 @@ public class PostService {
             if (hasReadRestrictions) {
     // ✅ 제한이 걸려있으면, 명단 매칭만 통과
                 return postPermissionRepository.existsByPostIdAndPermissionAndEmployeeId(post.getId(), PermissionType.READ, empId)
-                        || postPermissionRepository.existsByPostIdAndPermissionAndTeamId(post.getId(), PermissionType.READ, teamId);
+                        || hasPostPermissionByTeam(post.getId(), PermissionType.READ, teamId);
             }
-
+        boolean hasPostWhitelist =
+                postPermissionRepository.existsByPostIdAndPermissionAndEmployeeId(
+                        post.getId(), PermissionType.READ, empId)
+                        || hasPostPermissionByTeam(post.getId(), PermissionType.READ, teamId);
 
     // 3) 제한이 없으면 보드 정책
             if (boardPublic) return true;
@@ -125,8 +138,8 @@ public class PostService {
     /** 열람 권한 */
     public boolean canView(Post post, Employee emp) {
         Long empId = emp.getId();
-        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
-
+//        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : null;
         // 1) 작성자 본인은 항상 가능
         if (post.getAuthor() != null && empId.equals(post.getAuthor().getId())) {
             return true;
@@ -136,8 +149,7 @@ public class PostService {
         boolean hasPostWhitelist =
                 postPermissionRepository.existsByPostIdAndPermissionAndEmployeeId(
                         post.getId(), PermissionType.READ, empId)
-                        || postPermissionRepository.existsByPostIdAndPermissionAndTeamId(
-                        post.getId(), PermissionType.READ, teamId);
+                        || hasPostPermissionByTeam(post.getId(), PermissionType.READ, teamId);
 
         if (hasPostWhitelist) {
             return true;
@@ -169,7 +181,8 @@ public class PostService {
     /** 수정 권한: 작성자 또는 WRITE PostPermission / BoardPermission */
     public boolean canEdit(Post post, Employee emp) {
         Long empId = emp.getId();
-        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+//        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : -1L;
+        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : null;
 
         // 1) 작성자
         if (post.getAuthor() != null && empId.equals(post.getAuthor().getId())) {
@@ -180,8 +193,7 @@ public class PostService {
         boolean canByPost =
                 postPermissionRepository.existsByPostIdAndPermissionAndEmployeeId(
                         post.getId(), PermissionType.WRITE, empId)
-                        || postPermissionRepository.existsByPostIdAndPermissionAndTeamId(
-                        post.getId(), PermissionType.WRITE, teamId);
+                        || hasPostPermissionByTeam(post.getId(), PermissionType.WRITE, teamId);
 
         if (canByPost) {
             return true;
@@ -211,8 +223,7 @@ public class PostService {
         private boolean canReadBoardBySubject(Long boardId, Long empId, Long teamId) {
             boolean byEmp = boardPermissionRepository.existsByBoardType_IdAndEmployee_IdAndPermission(
                     boardId, empId, PermissionType.READ);
-            boolean byTeam = boardPermissionRepository.existsByBoardType_IdAndTeam_IdAndPermission(
-                    boardId, teamId, PermissionType.READ);
+            boolean byTeam = hasBoardPermissionByTeam(boardId, PermissionType.READ, teamId);
             return byEmp || byTeam;
         }
 
@@ -220,8 +231,7 @@ public class PostService {
         private boolean canWriteBoardBySubject(Long boardId, Long empId, Long teamId) {
             boolean byEmp = boardPermissionRepository.existsByBoardType_IdAndEmployee_IdAndPermission(
                     boardId, empId, PermissionType.WRITE);
-            boolean byTeam = boardPermissionRepository.existsByBoardType_IdAndTeam_IdAndPermission(
-                    boardId, teamId, PermissionType.WRITE);
+            boolean byTeam = hasBoardPermissionByTeam(boardId, PermissionType.WRITE, teamId);
             return byEmp || byTeam;
         }
 
