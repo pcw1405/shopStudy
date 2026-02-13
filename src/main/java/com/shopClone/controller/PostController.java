@@ -131,5 +131,84 @@ public class PostController {
         return "redirect:/posts/" + id + "?boardId=" + returnBoardId;
     }
 
+    @GetMapping("/posts/new")
+    public String newPostForm(@RequestParam(required = false) Long boardId,
+                              Model model,
+                              Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/members/login";
+        }
+
+        Member member = memberRepository.findByEmail(principal.getName());
+
+        // 탭 유지
+        List<BoardType> boards = boardTypeRepository.findAll();
+        model.addAttribute("boards", boards);
+
+        Long selectedBoardId = (boardId != null)
+                ? boardId
+                : boards.stream().findFirst()
+                .map(BoardType::getId)
+                .orElseThrow(() -> new IllegalStateException("등록된 게시판이 없습니다."));
+
+        model.addAttribute("currentBoardId", selectedBoardId);
+
+        // ✅ WRITE 권한 체크(없으면 403)
+        if (!postService.canWriteBoard(selectedBoardId, member)) {
+            return "error/403";
+        }
+
+        // 폼 기본값
+        model.addAttribute("boardId", selectedBoardId);
+        model.addAttribute("title", "");
+        model.addAttribute("content", "");
+
+        return "posts/new";
+    }
+
+    @PostMapping("/posts/create")
+    public String createPost(@RequestParam Long boardId,
+                             @RequestParam String title,
+                             @RequestParam String content,
+                             Model model,
+                             Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/members/login";
+        }
+
+        Member member = memberRepository.findByEmail(principal.getName());
+
+        // ===== 입력 검증 =====
+        String t = (title == null) ? "" : title.trim();
+        String c = (content == null) ? "" : content.trim();
+
+        if (t.isBlank() || t.length() > 100 || c.isBlank() || c.length() > 5000) {
+            // 폼 재노출(탭 유지)
+            List<BoardType> boards = boardTypeRepository.findAll();
+            model.addAttribute("boards", boards);
+            model.addAttribute("currentBoardId", boardId);
+
+            model.addAttribute("boardId", boardId);
+            model.addAttribute("title", t);
+            model.addAttribute("content", c);
+            model.addAttribute("errorMessage", "제목(1~100), 내용(1~5000)을 확인해주세요.");
+
+            return "posts/new";
+        }
+
+        try {
+            postService.createPost(boardId, t, c, member);
+        } catch (SecurityException e) {
+            return "error/403";
+        } catch (IllegalArgumentException e) {
+            // 게시판 없음(404 성격)
+            throw e;
+        }
+
+        return "redirect:/posts?boardId=" + boardId;
+    }
+
 
 }

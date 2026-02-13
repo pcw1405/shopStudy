@@ -228,12 +228,65 @@ public class PostService {
         }
 
 
-        private boolean canWriteBoardBySubject(Long boardId, Long empId, Long teamId) {
-            boolean byEmp = boardPermissionRepository.existsByBoardType_IdAndEmployee_IdAndPermission(
-                    boardId, empId, PermissionType.WRITE);
-            boolean byTeam = hasBoardPermissionByTeam(boardId, PermissionType.WRITE, teamId);
-            return byEmp || byTeam;
+    private boolean canWriteBoardBySubject(Long boardId, Long empId, Long teamId) {
+
+        long writeCount = boardPermissionRepository.countByBoardType_IdAndPermission(
+                boardId, PermissionType.WRITE
+        );
+
+        // ✅ WRITE 명단이 없으면: 로그인한 직원이면 누구나 작성 가능
+        if (writeCount == 0) {
+            return true;
         }
+
+        // ✅ WRITE 명단이 있으면: 명단 매칭만 허용
+        boolean byEmp = boardPermissionRepository.existsByBoardType_IdAndEmployee_IdAndPermission(
+                boardId, empId, PermissionType.WRITE
+        );
+
+        boolean byTeam = (teamId != null) && boardPermissionRepository.existsByBoardType_IdAndTeam_IdAndPermission(
+                boardId, teamId, PermissionType.WRITE
+        );
+
+        return byEmp || byTeam;
+    }
+
+    public boolean canWriteBoard(Long boardId, Member member) {
+        if (member == null || member.getEmployee() == null) return false;
+
+        Employee emp = member.getEmployee();
+        Long empId = emp.getId();
+        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : null; // ✅ null 통일
+
+        return canWriteBoardBySubject(boardId, empId, teamId);
+    }
+
+    @Transactional
+    public Long createPost(Long boardId, String title, String content, Member member) {
+
+        if (member == null || member.getEmployee() == null) {
+            throw new SecurityException("작성 권한이 없습니다.");
+        }
+
+        BoardType boardType = boardTypeRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다. id=" + boardId));
+
+        Employee emp = member.getEmployee();
+        Long empId = emp.getId();
+        Long teamId = (emp.getTeam() != null) ? emp.getTeam().getId() : null; // ✅ null 통일
+
+        if (!canWriteBoardBySubject(boardId, empId, teamId)) {
+            throw new SecurityException("작성 권한이 없습니다.");
+        }
+
+        Post post = new Post();
+        post.setBoardType(boardType);
+        post.setAuthor(emp);
+        post.setTitle(title);
+        post.setContent(content);
+
+        return postRepository.save(post).getId();
+    }
 
 //    private boolean canReadBoardBySubject(Long boardId, Long empId, Long teamId) {
 //        // 실제 구현 시:

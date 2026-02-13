@@ -30,6 +30,7 @@
 </head>
 <body>
 <h1>게시글 목록</h1>
+
 <div style="margin: 0 0 16px 0; display:flex; gap: 10px;">
     <a th:each="b : ${boards}"
        th:href="@{/posts(boardId=${b.id})}"
@@ -59,6 +60,9 @@
 <!--post.author.name은 author null이면 템플릿에서 터짐-->
 </tr>
     </tbody>
+    <div style="margin: 0 0 16px 0;">
+        <a th:href="@{/posts/new(boardId=${currentBoardId})}">글쓰기</a>
+    </div>
 </table>
 
 </body>
